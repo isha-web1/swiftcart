@@ -1,52 +1,57 @@
 
-//  Load Categories Dynamically
-async function fetchCategories() {
-    const container = document.getElementById('category-container');
-    try {
-        const res = await fetch('https://fakestoreapi.com/products/categories');
-        const categories = await res.json();
-        categories.forEach(cat => {
-            const btn = document.createElement('button');
-            btn.className = 'btn btn-sm md:btn-md btn-outline btn-primary rounded-full capitalize';
-            btn.innerText = cat;
-            btn.onclick = () => loadProducts(cat);
-            container.appendChild(btn);
-        });
-    } catch (e) { console.error("Error fetching categories", e); }
-}
+        // On Load
 
+        window.onload = () => {
+            fetchCategories();
+            loadProducts('all');
+        };
 
+        //  Load Categories Dynamically
 
-//  Load Products (All or Filtered)
+        async function fetchCategories() {
+            const container = document.getElementById('category-container');
+            try {
+                const res = await fetch('https://fakestoreapi.com/products/categories');
+                const categories = await res.json();
+                categories.forEach(cat => {
+                    const btn = document.createElement('button');
+                    btn.className = 'btn btn-sm md:btn-md btn-outline btn-primary rounded-full capitalize';
+                    btn.innerText = cat;
+                    btn.onclick = () => loadProducts(cat);
+                    container.appendChild(btn);
+                });
+            } catch (e) { console.error("Error fetching categories", e); }
+        }
 
-async function loadProducts(category) {
-    const grid = document.getElementById('products-grid');
-    const spinner = document.getElementById('loading-spinner');
+        //  Load Products (All or Filtered)
 
-    grid.innerHTML = '';
-    spinner.classList.remove('hidden');
+        async function loadProducts(category) {
+            const grid = document.getElementById('products-grid');
+            const spinner = document.getElementById('loading-spinner');
+            
+            grid.innerHTML = '';
+            spinner.classList.remove('hidden');
 
-    const url = category === 'all'
-        ? 'https://fakestoreapi.com/products'
-        : `https://fakestoreapi.com/products/category/${category}`;
+            const url = category === 'all' 
+                ? 'https://fakestoreapi.com/products' 
+                : `https://fakestoreapi.com/products/category/${category}`;
 
-    try {
-        const res = await fetch(url);
-        const products = await res.json();
-        spinner.classList.add('hidden');
+            try {
+                const res = await fetch(url);
+                const products = await res.json();
+                spinner.classList.add('hidden');
+                
+                products.forEach(product => {
+                    grid.innerHTML += createProductCard(product);
+                });
+            } catch (e) { console.error("Error fetching products", e); }
+        }
 
-        products.forEach(product => {
-            grid.innerHTML += createProductCard(product);
-        });
-    } catch (e) { console.error("Error fetching products", e); }
-}
+        //  Create Product Card UI
 
-
-//  Create Product Card UI
-
-function createProductCard(p) {
-    const stars = generateStars(p.rating.rate);
-    return `
+        function createProductCard(p) {
+            const stars = generateStars(p.rating.rate);
+            return `
                 <div class="card bg-base-100 shadow-xl border border-base-300 hover:shadow-2xl transition-all duration-300 group">
                     <figure class="p-6 bg-white h-52 relative">
                         <img src="${p.image}" alt="${p.title}" class="h-full object-contain group-hover:scale-105 transition-transform" />
@@ -70,9 +75,24 @@ function createProductCard(p) {
                     </div>
                 </div>
             `;
-}
+        }
 
+        //  Star Rating Visualizer
 
+        function generateStars(rating) {
+            let stars = '';
+            for (let i = 1; i <= 5; i++) {
+                stars += `<i class="fa-${i <= Math.round(rating) ? 'solid' : 'regular'} fa-star"></i>`;
+            }
+            return stars;
+        }
 
-fetchCategories();
-loadProducts('all');
+        
+
+        //  Cart Counter Logic
+
+        let cartCount = 0;
+        function updateCart() {
+            cartCount++;
+            document.getElementById('cart-count').innerText = cartCount;
+        }
