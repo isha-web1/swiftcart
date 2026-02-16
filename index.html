@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SwiftCart</title>
+    <!-- Tailwind CSS & DaisyUI -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        .line-clamp-1 {
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar bg-base-100/80 backdrop-blur-md shadow-sm sticky top-0 z-50 px-4 md:px-12">
+        <div class="navbar-start">
+            <a class="text-2xl font-black text-primary tracking-tighter cursor-pointer">SwiftCart</a>
+        </div>
+        <div class="navbar-center hidden lg:flex">
+            <ul class="menu menu-horizontal px-1 font-semibold gap-4">
+                <li><a href="#">Home</a></li>
+                <li><a href="#shop-section">Products</a></li>
+                <li><a href="#footer">About</a></li>
+            </ul>
+        </div>
+        <div class="navbar-end">
+            <div class="indicator cursor-pointer mr-4">
+                <span class="badge badge-primary badge-sm indicator-item" id="cart-count">0</span>
+                <i class="fa-solid fa-cart-shopping text-xl"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero min-h-[60vh] bg-base-200"
+        style="background-image: url(./Assets/banner-image.png);">
+        <div class="hero-overlay bg-black/60"></div>
+        <div class="hero-content text-center text-white">
+            <div class="max-w-xl">
+                <h1 class="text-5xl font-bold mb-4">Best Collection For You</h1>
+                <p class="mb-8 opacity-80 text-lg">Elevate your lifestyle with our curated selection of high-quality
+                    goods across all categories.</p>
+                <a href="#shop-section" class="btn btn-primary rounded-full px-8">Shop Now</a>
+            </div>
+        </div>
+    </header>
+</body>
+
+</html>
