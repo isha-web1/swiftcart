@@ -87,7 +87,24 @@
             return stars;
         }
 
-        
+        //  Modal Product Details
+
+        async function showDetails(id) {
+            const modal = document.getElementById('product_modal');
+            try {
+                const res = await fetch(`https://fakestoreapi.com/products/${id}`);
+                const p = await res.json();
+
+                document.getElementById('modal-img').src = p.image;
+                document.getElementById('modal-title').innerText = p.title;
+                document.getElementById('modal-badge').innerText = p.category;
+                document.getElementById('modal-desc').innerText = p.description;
+                document.getElementById('modal-price').innerText = `$${p.price.toFixed(2)}`;
+                document.getElementById('modal-rating').innerHTML = generateStars(p.rating.rate) + ` <span class="text-neutral ml-2">${p.rating.rate}</span>`;
+
+                modal.showModal();
+            } catch (e) { console.error("Error fetching detail", e); }
+        }
 
         //  Cart Counter Logic
 
